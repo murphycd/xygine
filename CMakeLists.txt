@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.15)
 
 # Rename this variable to change the project name
 set(PROJECT_NAME xyginext)
@@ -43,6 +43,8 @@ if(MSVC)
   if(BUILD_SHARED_LIBS)
     add_definitions(-DBUILD_XY)
   endif()
+  # set MVSC runtime library to MultiThreaded[Debug][DLL], based on whether debug config and/or using shared libs
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<BOOL:${BUILD_SHARED_LIBS}>:DLL>")
 endif()
 
 # Apple requires some extra guff
